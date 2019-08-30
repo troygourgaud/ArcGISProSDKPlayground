@@ -1,0 +1,40 @@
+﻿<ArcGIS defaultAssembly="firstAddOn-ArcgisPro.dll" defaultNamespace="firstAddOn_ArcgisPro" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+  <AddInInfo id="{2843a926-e7f2-4a2d-8927-5a557f677da5}" version="1.0" desktopVersion="2.3.15769">
+    <Name>firstAddOn_ArcgisPro</Name>
+    <Description>firstAddOn_ArcgisPro description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>taung</Author>
+    <Company>Acme</Company>
+    <Date>6/26/2019 1:44:00 PM, 2019</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+  <modules>
+    <insertModule id="firstAddOn_ArcgisPro_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="firstAddOn_ArcgisPro_Tab1" caption="New Tab">
+          <group refID="firstAddOn_ArcgisPro_Group1"/>
+        </tab>-->
+      </tabs>
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="firstAddOn_ArcgisPro_Group1" caption="Folder Connections" appearsOnAddInTab="true">
+          <button refID="firstAddOn_ArcgisPro_UIButton_GreetingThan" size="large" />          
+          <button refID="firstAddOn_ArcgisPro_UIButton_BtnTestLogging" size="large" />
+        </group>
+      </groups>
+      <controls>
+        <!-- add your controls here -->       
+        <button id="firstAddOn_ArcgisPro_UIButton_GreetingThan" caption="GreetingThan" className="firstAddOn_ArcgisPro.UIButton.GreetingThan" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">Greeting than button<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UIButton_BtnTestLogging" caption="BtnTestLogging" className="firstAddOn_ArcgisPro.UIButton.BtnTestLogging" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">Test nlog<disabledText /></tooltip>
+        </button>
+      </controls>
+    </insertModule>
+  </modules>
+</ArcGIS>

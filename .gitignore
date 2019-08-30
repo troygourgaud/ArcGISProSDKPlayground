@@ -1,0 +1,10 @@
+*.dll
+*.zip
+*.vs
+bin
+obj
+configs
+test
+testConfigs
+packages
+logs

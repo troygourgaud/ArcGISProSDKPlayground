@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrosscutUtility", "CrosscutUtility\CrosscutUtility.csproj", "{DD14FAC8-4E03-4F6D-B443-B5D80B20959A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "firstAddOn-ArcgisPro", "firstAddOn-ArcgisPro\firstAddOn-ArcgisPro.csproj", "{2843A926-E7F2-4A2D-8927-5A557F677DA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD14FAC8-4E03-4F6D-B443-B5D80B20959A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD14FAC8-4E03-4F6D-B443-B5D80B20959A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD14FAC8-4E03-4F6D-B443-B5D80B20959A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD14FAC8-4E03-4F6D-B443-B5D80B20959A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7787A8C-0735-4EFF-9CE5-2C38297D09F1}
+	EndGlobalSection
+EndGlobal
