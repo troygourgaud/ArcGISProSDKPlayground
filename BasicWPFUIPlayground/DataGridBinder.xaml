@@ -1,0 +1,67 @@
+﻿<Window x:Class="BasicWPFUIPlayground.DataGridBinder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BasicWPFUIPlayground"
+        mc:Ignorable="d"
+        Title="DataGridBinder" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Grid.Column="0" Name="dgUsers" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="ID">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Id}" ></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Size" Binding="{Binding Size}" />
+
+                <DataGridTemplateColumn Header="Birthday">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Birthday}" BorderThickness="0" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridComboBoxColumn Header="GenderKV" SelectedItemBinding="{Binding SelGenKV}" DisplayMemberPath="Value" SelectedValuePath="Key">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding GenKeyPair}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding GenKeyPair}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                
+                <DataGridComboBoxColumn Header="Gender" SelectedItemBinding="{Binding SelectedGender}" DisplayMemberPath="DisplayName" SelectedValuePath="CodedValue">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding GenderList}" />
+                        
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding GenderList}"/>
+                          
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="DebugBtn" Grid.Row="1" Grid.Column="0" Click="DebugBtn_Click" >Lets Test</Button>
+    </Grid>
+</Window>

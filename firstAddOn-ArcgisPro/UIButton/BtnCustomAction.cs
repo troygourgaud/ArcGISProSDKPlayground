@@ -18,11 +18,11 @@ using ArcGIS.Desktop.Mapping;
 
 namespace firstAddOn_ArcgisPro.UIButton
 {
-    internal class GreetingThan : Button
+    internal class BtnCustomAction : Button
     {
         protected override void OnClick()
         {
-            MessageBox.Show("Greeting by Than, hi hi");
+            
         }
     }
 }

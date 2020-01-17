@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrosscutUtility", "CrosscutUtility\CrosscutUtility.csproj", "{DD14FAC8-4E03-4F6D-B443-B5D80B20959A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "firstAddOn-ArcgisPro", "firstAddOn-ArcgisPro\firstAddOn-ArcgisPro.csproj", "{2843A926-E7F2-4A2D-8927-5A557F677DA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicWPFUIPlayground", "BasicWPFUIPlayground\BasicWPFUIPlayground.csproj", "{4845E51A-DA00-4C11-AB9D-F673583A1C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConversionTool", "ConversionTool\ConversionTool.csproj", "{7A0C74F0-20F2-42F5-AF68-C3CE58C64223}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2843A926-E7F2-4A2D-8927-5A557F677DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4845E51A-DA00-4C11-AB9D-F673583A1C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4845E51A-DA00-4C11-AB9D-F673583A1C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4845E51A-DA00-4C11-AB9D-F673583A1C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4845E51A-DA00-4C11-AB9D-F673583A1C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A0C74F0-20F2-42F5-AF68-C3CE58C64223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A0C74F0-20F2-42F5-AF68-C3CE58C64223}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A0C74F0-20F2-42F5-AF68-C3CE58C64223}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A0C74F0-20F2-42F5-AF68-C3CE58C64223}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

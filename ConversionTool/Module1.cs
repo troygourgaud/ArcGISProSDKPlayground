@@ -16,29 +16,23 @@ using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
-using NLog;
-using System.IO;
-using CrosscutUtility;
 
-namespace firstAddOn_ArcgisPro
+namespace ConversionTool
 {
     internal class Module1 : Module
     {
         private static Module1 _this = null;
-        public ILoggerManager ModuleLogManager;
+
         /// <summary>
         /// Retrieve the singleton instance to this module here
-        /// Always one module for each addin
         /// </summary>
         public static Module1 Current
         {
             get
             {
-                return _this ?? (_this = (Module1)FrameworkApplication.FindModule("firstAddOn_ArcgisPro_Module"));
+                return _this ?? (_this = (Module1)FrameworkApplication.FindModule("ConversionTool_Module"));
             }
         }
-
-        public SearchCatalogEditBox RibbonSearchCatalogEditBox { get; set; }
 
         #region Overrides
         /// <summary>
@@ -52,16 +46,7 @@ namespace firstAddOn_ArcgisPro
             return true;
         }
 
-        protected override bool Initialize()
-        {
-            string ModuleLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string nLogConfigLocation = Path.Combine(ModuleLocation, "nlog.config");
-            
-            ModuleLogManager = new LoggerManager(nLogConfigLocation);
-            return true;
-        }
+        #endregion Overrides
 
-            #endregion Overrides
-
-        }
+    }
 }

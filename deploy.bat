@@ -1,0 +1,1 @@
+copy "D:\ThanWorking\Github\ArcGISProSDKPlayground\firstAddOn-ArcgisPro\bin\Debug\firstAddOn-ArcgisPro.esriAddinX" "D:\RnD_Data\ArcGISProAddin\Dev\firstAddOn-ArcgisPro.esriAddinX" /y

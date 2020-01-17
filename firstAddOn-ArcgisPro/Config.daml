@@ -1,5 +1,5 @@
 ﻿<ArcGIS defaultAssembly="firstAddOn-ArcgisPro.dll" defaultNamespace="firstAddOn_ArcgisPro" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
-  <AddInInfo id="{2843a926-e7f2-4a2d-8927-5a557f677da5}" version="1.0" desktopVersion="2.3.15769">
+  <AddInInfo id="{2843a926-e7f2-4a2d-8927-5a557f677da5}" version="1.1" desktopVersion="2.3.15769">
     <Name>firstAddOn_ArcgisPro</Name>
     <Description>firstAddOn_ArcgisPro description</Description>
     <Image>Images\AddinDesktop32.png</Image>
@@ -21,20 +21,51 @@
       <groups>
         <!-- comment this out if you have no controls on the Addin tab to avoid
               an empty group-->
-        <group id="firstAddOn_ArcgisPro_Group1" caption="Folder Connections" appearsOnAddInTab="true">
-          <button refID="firstAddOn_ArcgisPro_UIButton_GreetingThan" size="large" />          
-          <button refID="firstAddOn_ArcgisPro_UIButton_BtnTestLogging" size="large" />
+        <group id="firstAddOn_ArcgisPro_Group1" caption="General" appearsOnAddInTab="true">
+          <tool refID="firstAddOn_ArcgisPro_DrawLineMapTool" size="large" />
+          <button refID="firstAddOn_ArcgisPro_UI_DockpaneCalDistance_ShowButton" size="large" />
+          <button refID="firstAddOn_ArcgisPro_UIButton_GPToolRunner" size="large" />
         </group>
+        <!--<group id="SearchCatalog_group" caption="Search Catalog function" appearsOnAddInTab="true">
+          <editBox refID="SearchCatalogEditBoxNew" size="middle" />
+        </group>-->
       </groups>
       <controls>
-        <!-- add your controls here -->       
-        <button id="firstAddOn_ArcgisPro_UIButton_GreetingThan" caption="GreetingThan" className="firstAddOn_ArcgisPro.UIButton.GreetingThan" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
-          <tooltip heading="Tooltip Heading">Greeting than button<disabledText /></tooltip>
-        </button>
+        <!-- add your controls here -->
         <button id="firstAddOn_ArcgisPro_UIButton_BtnTestLogging" caption="BtnTestLogging" className="firstAddOn_ArcgisPro.UIButton.BtnTestLogging" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
-          <tooltip heading="Tooltip Heading">Test nlog<disabledText /></tooltip>
+          <tooltip heading="Tooltip Heading">
+            Test nlog<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UIButton_BtnCustomAction" caption="BtnCustomAction" className="firstAddOn_ArcgisPro.UIButton.BtnCustomAction" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">
+            Tooltip text<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UI_XYZtoRaster_ShowButton" caption="Show XYZtoRaster" className="firstAddOn_ArcgisPro.UI.XYZtoRaster_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">
+            Show Dockpane<disabledText /></tooltip>
+        </button>
+        <editBox id="SearchCatalogEditBoxNew" caption="Select catalog and enter search value" className="SearchCatalogEditBox" sizeString="01234567"></editBox>
+        <tool id="firstAddOn_ArcgisPro_DrawLineMapTool" caption="DrawLineMapTool" className="DrawLineMapTool" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonRed32.png" condition="esri_mapping_mapPane">
+          <tooltip heading="Tooltip Heading">
+            Tooltip text<disabledText /></tooltip>
+        </tool>
+        <button id="firstAddOn_ArcgisPro_UI_DockpaneCalDistance_ShowButton" caption="Show DockpaneCalDistance" className="firstAddOn_ArcgisPro.UI.DockpaneCalDistance_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">
+            Show Dockpane<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UIButton_GPToolRunner" caption="GPToolRunner" className="firstAddOn_ArcgisPro.UIButton.GPToolRunner" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </button>
       </controls>
+      <dockPanes>
+        <dockPane id="firstAddOn_ArcgisPro_UI_XYZtoRaster" caption="XYZtoRaster" className="firstAddOn_ArcgisPro.UI.XYZtoRasterViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="firstAddOn_ArcgisPro.UI.XYZtoRasterView" />
+        </dockPane>
+        <dockPane id="firstAddOn_ArcgisPro_UI_DockpaneCalDistance" caption="DockpaneCalDistance" className="firstAddOn_ArcgisPro.UI.DockpaneCalDistanceViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="firstAddOn_ArcgisPro.UI.DockpaneCalDistanceView" />
+        </dockPane>
+      </dockPanes>
+      <menus></menus>
     </insertModule>
   </modules>
 </ArcGIS>
