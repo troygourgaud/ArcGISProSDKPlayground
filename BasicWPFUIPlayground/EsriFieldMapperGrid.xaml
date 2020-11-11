@@ -7,8 +7,13 @@
         mc:Ignorable="d"
         Title="EsriFieldMapperGrid" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="Test" Grid.Row="0"></ComboBox>
         <!--ItemsSource="{Binding Path=FieldMapper,Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"-->
-        <DataGrid  Name="dgFieldMapper" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+        <DataGrid  Name="dgFieldMapper" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Import Field">
                     <DataGridTemplateColumn.CellTemplate>

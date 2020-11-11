@@ -58,10 +58,29 @@ namespace firstAddOn_ArcgisPro
             string nLogConfigLocation = Path.Combine(ModuleLocation, "nlog.config");
             
             ModuleLogManager = new LoggerManager(nLogConfigLocation);
-            return true;
+            ArcGIS.Desktop.Core.Events.ProjectClosingEvent.Subscribe(OnProjectClosing);
+            return base.Initialize();
+            //return true;
         }
+        /// <summary>
+        /// Event handler for ProjectClosing event.
+        /// </summary>
+        /// <param name="args">The ProjectClosing arguments.</param>
+        /// <returns></returns>
+        private Task OnProjectClosing(ArcGIS.Desktop.Core.Events.ProjectClosingEventArgs args)
+        {
 
-            #endregion Overrides
+            // if already canceled, ignore
+            if (args.Cancel)
+                return Task.CompletedTask;
 
+            var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.PerUserRoamingAndLocal);
+            Console.WriteLine(config == null);
+            var targetProjFolder = @"c:\temp";
+            var result = MessageBox.Show($@"Soll das aktuelle Projekt in ein anderes Verzeichnis als          {targetProjFolder} kopiert werden ?", "Projekt sichern", System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Question);
+            return Task.CompletedTask;
         }
+        #endregion Overrides
+
+    }
 }

@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="firstAddOn_ArcgisPro.UI.EllipsoidalAreaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
+             xmlns:ui="clr-namespace:firstAddOn_ArcgisPro.UI"
+             xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" IsEnabled="{Binding Path=DockEnabled}"
+             d:DataContext="{Binding Path=ui.EllipsoidalAreaViewModel}">
+     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Margin="10,0,10,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Row="1" BorderBrush="{DynamicResource Esri_TextControlBrush}" BorderThickness="0 0 0 2" Margin="0,0,0,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Output unit" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0"></TextBlock>
+                    <ComboBox Margin="10,0,0,0"
+                          HorizontalAlignment="Left"
+                    Width="150"
+                    Grid.Row="0" Grid.Column="1"
+                    Background="{DynamicResource Esri_BackgroundPressedBrush}"
+                    Foreground="{DynamicResource Esri_TextStyleEmphasisBrush}" MaxWidth="200"
+                    SelectedItem="{Binding Path=SelectedUnitFormat}" 
+                    DisplayMemberPath="Value" SelectedValuePath="Key" ItemsSource="{Binding LinearUnitList}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CmdUnitChanged}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Grid>
+            </Border>
+            <TextBlock x:Name="tbMsg" Grid.Row="0" Text="{Binding Path=Message}" ></TextBlock>
+
+            <Border Grid.Row="2" BorderBrush="{DynamicResource Esri_TextControlBrush}" BorderThickness="0 0 0 2" Margin="0,0,0,5">
+                <StackPanel Grid.Row="2" Orientation="Vertical" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="tbGeodesicArea" Text="{Binding Path=GeodesicAreaInfo}" ></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnDrawAndGetArea" Command="{Binding Path=CmdDrawAndGetArea}" Style="{DynamicResource Esri_Button}" >
+                            Draw
+                        </Button>
+                        <Button x:Name="btnClearGraphics" Command="{Binding Path=CmdClearGraphics}" Style="{DynamicResource Esri_Button}" >
+                            Clear
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <StackPanel Grid.Row="3" Orientation="Vertical"  Grid.ColumnSpan="2" Margin="0,0,0,5">
+                <TextBlock Text="Feature Area" />
+                <TextBlock Text="Get area from selected features" />
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnGetAreaFromFeature" Width="150" Command="{Binding Path=CmdGetAreaFromFeature}" Style="{DynamicResource Esri_Button}" >Get Area</Button>
+                </StackPanel>
+                <TextBlock x:Name="totalGeodesicArea" Text="{Binding TotalSelectedFeatureArea, Mode=OneWay, StringFormat='Total Area: {0}'}" ></TextBlock>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
+

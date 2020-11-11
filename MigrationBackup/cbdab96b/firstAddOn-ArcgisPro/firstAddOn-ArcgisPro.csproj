@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7A0C74F0-20F2-42F5-AF68-C3CE58C64223}</ProjectGuid>
+    <ProjectGuid>{2843A926-E7F2-4A2D-8927-5A557F677DA5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConversionTool</RootNamespace>
-    <AssemblyName>ConversionTool</AssemblyName>
+    <RootNamespace>firstAddOn_ArcgisPro</RootNamespace>
+    <AssemblyName>firstAddOn-ArcgisPro</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -42,9 +42,20 @@
     <ArcGISFolder>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\ESRI\ArcGISPro', 'InstallDir', null, RegistryView.Registry64))</ArcGISFolder>
     <ArcGISFolder Condition="'$(ArcGISFolder)' == ''">$(registry:HKEY_CURRENT_USER\SOFTWARE\ESRI\ArcGISPro@InstallDir)</ArcGISFolder>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.7\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -87,15 +98,15 @@
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\GeoProcessing\ArcGIS.Desktop.GeoProcessing.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ArcGIS.Desktop.Layouts">
+    <Reference Include="ArcGIS.Desktop.Layouts.dll">
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Layout\ArcGIS.Desktop.Layouts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ArcGIS.Desktop.Shared.Wpf">
+    <Reference Include="ArcGIS.Desktop.Shared.Wpf.dll">
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\ArcGIS.Desktop.Shared.Wpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ArcGIS.Desktop.Ribbon.Wpf">
+    <Reference Include="ArcGIS.Desktop.Ribbon.Wpf.dll">
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\ArcGIS.Desktop.Ribbon.Wpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -107,47 +118,95 @@
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\ArcGIS.Desktop.Resources.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ArcGIS.Desktop.Resources">
-      <HintPath>C:\Program Files\ArcGIS\Pro\bin\ArcGIS.Desktop.Resources.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.ItemIndex">
-      <HintPath>C:\Program Files\ArcGIS\Pro\bin\ESRI.ArcGIS.ItemIndex.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="Config.daml" />
+    <AddInContent Include="Config.daml">
+      <SubType>Designer</SubType>
+    </AddInContent>
     <AddInContent Include="Images\AddInDesktop16.png" />
     <AddInContent Include="Images\AddInDesktop32.png" />
     <AddInContent Include="DarkImages\AddInDesktop16.png" />
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateBlankProject.cs" />
+    <Compile Include="CustomDataGrid.cs" />
+    <Compile Include="Daml.cs" />
+    <Compile Include="DrawLineMapTool.cs" />
+    <Compile Include="DTO\CustomField.cs" />
     <Compile Include="Module1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\GetDistance.xaml.cs">
-      <DependentUpon>GetDistance.xaml</DependentUpon>
+    <Compile Include="SearchCatalogEditBox.cs" />
+    <Compile Include="UIButton\BtnCustomAction.cs" />
+    <Compile Include="UIButton\BtnTestLogging.cs" />
+    <Compile Include="UIButton\GPToolRunner.cs" />
+    <Compile Include="UI\DockpaneCalDistance.xaml.cs">
+      <DependentUpon>DockpaneCalDistance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\GetDistanceViewModel.cs" />
+    <Compile Include="UI\DockpaneCalDistanceViewModel.cs" />
+    <Compile Include="UI\DockpaneSearchLayerFile.xaml.cs">
+      <DependentUpon>DockpaneSearchLayerFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DockpaneSearchLayerFileViewModel.cs" />
+    <Compile Include="UI\SeismicLinesReport.xaml.cs">
+      <DependentUpon>SeismicLinesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SeismicLinesReportViewModel.cs" />
+    <Compile Include="UI\XYZtoRaster.xaml.cs">
+      <DependentUpon>XYZtoRaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\XYZtoRasterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\GetDistance.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <AddInContent Include="Images\GenericButtonBlue16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\GenericButtonBlue32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\GenericButtonBlue16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="DarkImages\GenericButtonBlue32.png" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Images\GenericButtonPurple16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AddInContent Include="Images\GenericButtonPurple32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AddInContent Include="DarkImages\GenericButtonPurple16.png" />
+    <AddInContent Include="DarkImages\GenericButtonPurple32.png" />
+    <AddInContent Include="Images\GenericButtonRed16.png" />
+    <AddInContent Include="Images\GenericButtonRed32.png" />
+    <AddInContent Include="DarkImages\GenericButtonRed16.png" />
+    <AddInContent Include="DarkImages\GenericButtonRed32.png" />
+    <Content Include="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="DarkImages\GenericButtonPurple32.png" />
+    <ProjectReference Include="..\CrosscutUtility\CrosscutUtility.csproj">
+      <Project>{dd14fac8-4e03-4f6d-b443-b5d80b20959a}</Project>
+      <Name>CrosscutUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="UI\DockpaneCalDistance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DockpaneSearchLayerFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SeismicLinesReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\XYZtoRaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
@@ -167,6 +226,10 @@
   <UsingTask AssemblyFile="C:\Program Files\ArcGIS\Pro\bin\proapp-sdk-MSBuild.dll" TaskName="proapp_sdk_MSBuild.ConvertToRelativePath" />
   <!--<Import Project="Esri.ArcGISPro.Extensions.targets" Condition="Exists('Esri.ArcGISPro.Extensions.targets')" />-->
   <Import Project="C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets" Condition="Exists('C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets') AND !Exists('Esri.ArcGISPro.Extensions.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

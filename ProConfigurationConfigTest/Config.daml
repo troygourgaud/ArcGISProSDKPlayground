@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArcGIS defaultAssembly="ProConfigurationConfigTest.dll"
+        defaultNamespace="ProConfigurationConfigTest"
+        xmlns="http://schemas.esri.com/DADF/Registry"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+
+  <AddInInfo id="{a0e04b85-ac0d-455d-bbde-cf8c729527b4}" version="1.0" desktopVersion="2.5.22081">
+    <Name>ProConfigurationConfigTest</Name>
+    <Description>ProConfigurationConfigTest description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>taung</Author>
+    <Company>Acme</Company>
+    <Date>4/23/2020 1:31:19 PM, 2020</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+
+  <Configuration>
+    <ConfigurationManager className="ConfigurationManager1"/>
+  </Configuration>
+
+  <modules>
+    <insertModule id="ProConfigurationConfigTest_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="ProConfigurationConfigTest_Tab1" caption="New Tab">
+          <group refID="ProConfigurationConfigTest_Group1"/>
+        </tab>-->
+      </tabs>
+
+      <groups>
+
+      </groups>
+
+      <controls>
+        <!-- add your controls here -->
+      </controls>
+
+    </insertModule>
+  </modules>
+</ArcGIS>

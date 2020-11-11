@@ -25,6 +25,10 @@
           <tool refID="firstAddOn_ArcgisPro_DrawLineMapTool" size="large" />
           <button refID="firstAddOn_ArcgisPro_UI_DockpaneCalDistance_ShowButton" size="large" />
           <button refID="firstAddOn_ArcgisPro_UIButton_GPToolRunner" size="large" />
+          <button refID="firstAddOn_ArcgisPro_CreateBlankProject" size="large" />
+          <button refID="firstAddOn_ArcgisPro_UI_SeismicLinesReport_ShowButton" size="large" />
+          <button refID="firstAddOn_ArcgisPro_UI_DockpaneSearchLayerFile_ShowButton" size="large" />
+          <button refID="firstAddOn_ArcgisPro_UI_EllipsoidalArea_ShowButton" size="large" />
         </group>
         <!--<group id="SearchCatalog_group" caption="Search Catalog function" appearsOnAddInTab="true">
           <editBox refID="SearchCatalogEditBoxNew" size="middle" />
@@ -56,6 +60,24 @@
         <button id="firstAddOn_ArcgisPro_UIButton_GPToolRunner" caption="GPToolRunner" className="firstAddOn_ArcgisPro.UIButton.GPToolRunner" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </button>
+        <button id="firstAddOn_ArcgisPro_CreateBlankProject" caption="CreateBlankProject" className="CreateBlankProject" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UI_SeismicLinesReport_ShowButton" caption="Show SeismicLinesReport" className="firstAddOn_ArcgisPro.UI.SeismicLinesReport_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UI_DockpaneSearchLayerFile_ShowButton" caption="Show DockpaneSearchLayerFile" className="firstAddOn_ArcgisPro.UI.DockpaneSearchLayerFile_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+        <button id="firstAddOn_ArcgisPro_UI_EllipsoidalArea_ShowButton" caption="Show EllipsoidalArea" className="firstAddOn_ArcgisPro.UI.EllipsoidalArea_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+        <tool id="ProWoodsideTools_EllipsoidalAreaMapTool" className="ProWoodsideTools.EllipsoidalAreaMapTool" loadOnClick="false" caption="WEL Area" smallImage="Images\EllipsoidalArea16.png" largeImage="Images\EllipsoidalArea32.png" condition="esri_mapping_mapPane" keytip="Calculate Ellipsoidal Area of a Polygon">
+          <tooltip heading="Calculate Ellipsoidal Area of a Polygon">
+            Calculates the Ellipsoidal Area of a selected polygon
+            <disabledText />
+          </tooltip>
+        </tool>
       </controls>
       <dockPanes>
         <dockPane id="firstAddOn_ArcgisPro_UI_XYZtoRaster" caption="XYZtoRaster" className="firstAddOn_ArcgisPro.UI.XYZtoRasterViewModel" dock="group" dockWith="esri_core_contentsDockPane">
@@ -63,6 +85,15 @@
         </dockPane>
         <dockPane id="firstAddOn_ArcgisPro_UI_DockpaneCalDistance" caption="DockpaneCalDistance" className="firstAddOn_ArcgisPro.UI.DockpaneCalDistanceViewModel" dock="group" dockWith="esri_core_contentsDockPane">
           <content className="firstAddOn_ArcgisPro.UI.DockpaneCalDistanceView" />
+        </dockPane>
+        <dockPane id="firstAddOn_ArcgisPro_UI_SeismicLinesReport" caption="SeismicLinesReport" className="firstAddOn_ArcgisPro.UI.SeismicLinesReportViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="firstAddOn_ArcgisPro.UI.SeismicLinesReportView" />
+        </dockPane>
+        <dockPane id="firstAddOn_ArcgisPro_UI_DockpaneSearchLayerFile" caption="DockpaneSearchLayerFile" className="firstAddOn_ArcgisPro.UI.DockpaneSearchLayerFileViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="firstAddOn_ArcgisPro.UI.DockpaneSearchLayerFileView" />
+        </dockPane>
+        <dockPane id="firstAddOn_ArcgisPro_UI_EllipsoidalArea" caption="EllipsoidalArea" className="firstAddOn_ArcgisPro.UI.EllipsoidalAreaViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="firstAddOn_ArcgisPro.UI.EllipsoidalAreaView" />
         </dockPane>
       </dockPanes>
       <menus></menus>

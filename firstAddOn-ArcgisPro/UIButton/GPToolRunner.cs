@@ -28,13 +28,27 @@ namespace firstAddOn_ArcgisPro.UIButton
     {        
         protected async override void OnClick()
         {
+            var dlg = new OpenItemDialog()
+            {
+               
+                Title = "Browse Content"
+            };
+            dlg.InitialLocation = @"D:\SampleData";
+            //show the dialog and retrieve the selection if there was one
+            if (!dlg.ShowDialog().Value)
+                return;
+            var item = dlg.Items.First();
+        }
+
+        private async void GPToolRun()
+        {
             try
             {
 
                 //string toolboxPath = @"D:\RnD_Data\EsriTraining\PythonGP\Scripts\CreateFCAndFields.pyt\CreateFeatureClassAndFields";
                 string toolboxPath = @"D:\RnD_Data\EsriTraining\PythonGP\ScriptTool\CreateFCAndFields.tbx\CreateFCAndFields";
                 string gdbPath = @"D:\RnD_Data\EsriTraining\PythonGP\Data\SanJuan.gdb";
-                
+
                 string fcName = "TempFeature_" + DateTime.Now.ToString("yyyyMMddHHmmssf");
                 string geometryType = "POINT";
                 string hasZValue = "DISABLED";
@@ -69,8 +83,8 @@ namespace firstAddOn_ArcgisPro.UIButton
                 });
                 bool result = false;
                 string message = "";
-                string strFieldInfoList = "[['school_name', 'TEXT', 'Name', 255, 'Hello world', ''],"+
-                                    "['street_number', 'LONG', 'Street Number', None, 35, 'StreetNumDomain'],"+
+                string strFieldInfoList = "[['school_name', 'TEXT', 'Name', 255, 'Hello world', '']," +
+                                    "['street_number', 'LONG', 'Street Number', None, 35, 'StreetNumDomain']," +
                                     "['year_start', 'DATE', 'Year Start', None, '2017-08-09 16:05:07', '']]";
                 List<List<string>> FieldInfoList = new List<List<string>>()
                 {
@@ -85,7 +99,7 @@ namespace firstAddOn_ArcgisPro.UIButton
                     "'year_start' 'DATE' 'Year Start' None '2017-08-09 16:05:07' ''"
                 };
 
-                var arguments = Geoprocessing.MakeValueArray(gdbPath,fcName, geometryType, hasZValue, outSR, strFieldList, result, message);
+                var arguments = Geoprocessing.MakeValueArray(gdbPath, fcName, geometryType, hasZValue, outSR, strFieldList, result, message);
                 Geoprocessing.OpenToolDialog(toolboxPath, arguments);
                 //var gpResult = Geoprocessing.ExecuteToolAsync(toolboxPath, arguments);
                 //gpResult.Wait();
@@ -102,7 +116,7 @@ namespace firstAddOn_ArcgisPro.UIButton
                 //else
                 //{
                 //    MessageBox.Show("Process  success");
-                 
+
                 //}
                 //using (Geodatabase fileGeodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri("dkfs"))))
 
@@ -112,10 +126,10 @@ namespace firstAddOn_ArcgisPro.UIButton
                 //    this.FieldListToAdd = featureClass.GetFields();
                 //}
 
-               
-               
+
+
             }
-            catch(Exception exce)
+            catch (Exception exce)
             {
                 MessageBox.Show($"Exception occured {exce.Message}{Environment.NewLine}{exce.StackTrace}");
             }

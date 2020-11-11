@@ -1,0 +1,25 @@
+{
+  "Seismic": {
+    "WarningScale": 1000000,
+    "LineFeatureClass": [
+      {
+        "Name": "Seismic_Survey_Tracklines_Detailed",
+        "Fields": [ "LINE_NAME" ]
+      },
+      {
+        "Name": "Seismic_Survey_Tracklines_Ends_Bends",
+        "Fields": [ "LINE_NAME" ]
+      }
+    ],
+    "SurveyFeatureClass": [
+      {
+        "Name": "Seismic_Survey_Tracklines_Detailed",
+        "Fields": [ "SURVEY_NAME" ]
+      },
+      {
+        "Name": "Seismic_Survey_Tracklines_Ends_Bends",
+        "Fields": [ "SURVEY_NAME" ]
+      }
+    ]
+  }
+}
