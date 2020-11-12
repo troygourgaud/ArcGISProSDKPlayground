@@ -84,6 +84,7 @@
     <Compile Include="ExternalImport\MapViewUtility.cs" />
     <Compile Include="ExternalImport\StringFormatter.cs" />
     <Compile Include="Module1.cs" />
+    <Compile Include="ProMapTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchCatalogEditBox.cs" />
     <Compile Include="UIButton\BtnCustomAction.cs" />

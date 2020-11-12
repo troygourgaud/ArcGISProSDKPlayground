@@ -26,13 +26,14 @@ using System;
 using WoodsideTool.ProDesktop.Controller;
 using ProWoodsideTools;
 using System.Windows.Threading;
+using ArcGIS.Desktop.Layouts;
 
 namespace firstAddOn_ArcgisPro.UI
 {
     internal class EllipsoidalAreaViewModel : DockPane
     {
         private const string _dockPaneID = "firstAddOn_ArcgisPro_UI_EllipsoidalArea";
-
+        private const string _graphicLayerName = "Ellipsoidal Area Graphics";
         public List<IDisposable> CurrentGraphicList { get; set; }
         private GeometryUtility GeometryUtil;
 
@@ -47,24 +48,128 @@ namespace firstAddOn_ArcgisPro.UI
             }
         }
 
-
-        private bool CanClearGraphics()
-        {
-            return (this.CurrentGraphicList.Count > 0);
-        }
+        public ICommand CmdRemoveSelected { get; set; }
+        private GraphicsLayer _PolygonGraphicsLayer;
+       
         protected EllipsoidalAreaViewModel()
         {
             this.DockEnabled = true;
             this.GeometryUtil = new GeometryUtility();
             this.GeodesicAreaInfo = "Graphic Area:";
             //this._cmdClearGraphics = new RelayCommand(() => this.RemoveDrawnGraphics(), () => this.CanClearGraphics());
-            this._cmdClearGraphics = new RelayCommand(() => this.RemoveAllGraphics(), () => this.CanClearGraphics());
+            this._cmdClearGraphics = new RelayCommand(() => this.CheckAndRemoveGraphicLayer(), () => this.CanClearGraphics());
+            this.CmdRemoveSelected = new RelayCommand(() => this.RemoveSelectedGraphic(), () => this.CanRemoveGraphics());
             this.CmdUnitChanged = new RelayCommand(() => this.HandleUnitChanged(), () => { return true; });
             this.MapViewUtil = new MapViewUtility();
             //From this constructor , it does not reach/notify the binding of properties to UI
             this.BuildUiBindedProperties();
             this.CurrentGraphicList = new List<IDisposable>();
+            this._PolygonGraphicsLayer = null;
+            this._esriLayoutSelect = FrameworkApplication.GetPlugInWrapper(DAML.Tool.esri_layouts_selectByRectangleTool) as ICommand;
         }
+
+        
+
+        private async void CheckAndCreateGraphicLayer()
+        {
+            var map = MapView.Active.Map;
+            if (map.MapType != MapType.Map)
+                return;// not 2D
+
+            if (this._PolygonGraphicsLayer == null)//is that null?
+            {
+                //find in the current map
+                this._PolygonGraphicsLayer = map.GetLayersAsFlattenedList().OfType<GraphicsLayer>().FirstOrDefault(x => x.Name.Equals(_graphicLayerName, StringComparison.OrdinalIgnoreCase));
+                if (this._PolygonGraphicsLayer == null) // if it is not existing layer in the map
+                {
+                    var gl_param = new GraphicsLayerCreationParams { Name = _graphicLayerName };
+                    await QueuedTask.Run(() =>
+                    {
+                        this._PolygonGraphicsLayer = LayerFactory.Instance.CreateLayer<GraphicsLayer>(gl_param, map);
+                    });
+                    this._PolygonGraphicsLayer.PropertyChanged += _PolygonGraphicsLayer_PropertyChanged;
+                }
+            }
+        }
+
+        private void _PolygonGraphicsLayer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.CalculateTotalAreaInfo();
+        }
+
+        private async void CheckAndRemoveGraphicLayer()
+        {
+            var map = MapView.Active.Map;
+            if (map.MapType != MapType.Map)
+                return;// not 2D
+
+            if (this._PolygonGraphicsLayer != null)
+            {
+                
+                await QueuedTask.Run(() =>
+                {
+                    map.RemoveLayer((Layer)this._PolygonGraphicsLayer);
+                });
+                this._PolygonGraphicsLayer = null;
+            }
+        }
+
+        private bool CanClearGraphics()
+        {
+            if (MapView.Active != null && MapView.Active.Map != null)
+            {
+                var map = MapView.Active.Map;
+                if (map.MapType != MapType.Map)
+                    return false;// not 2D
+
+                if (this._PolygonGraphicsLayer == null)
+                {
+                    return false;
+                }
+
+                if (this._PolygonGraphicsLayer.GetElementsAsFlattenedList().Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool CanRemoveGraphics()
+        {
+            if (MapView.Active != null && MapView.Active.Map != null)
+            {
+                var map = MapView.Active.Map;
+                if (map.MapType != MapType.Map)
+                    return false;// not 2D
+
+                if (this._PolygonGraphicsLayer == null)
+                {
+                    return false;
+                }
+
+                if (this._PolygonGraphicsLayer.GetSelectedElements().Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private async void RemoveSelectedGraphic()
+        {
+            var map = MapView.Active.Map;
+            if (map.MapType != MapType.Map)
+                return;// not 2D
+            IReadOnlyList<Element> graphicElementList = this._PolygonGraphicsLayer.GetSelectedElements();
+            await QueuedTask.Run(() =>
+            {
+                this._PolygonGraphicsLayer.RemoveElements(graphicElementList);
+                
+            });
+            this.CalculateTotalAreaInfo();
+        }
+
+      
         private async Task RemoveAllGraphics()
         {
             var ps = new ProgressorSource("Check and remove graphic...");
@@ -297,6 +402,16 @@ namespace firstAddOn_ArcgisPro.UI
                 SetProperty(ref _GeoDesicAreaInfo, value, () => GeodesicAreaInfo);
             }
         }
+        private string _GeodesicTotalAreaInfo = "";
+
+        public string GeodesicTotalAreaInfo
+        {
+            get { return _GeodesicTotalAreaInfo; }
+            set
+            {
+                SetProperty(ref _GeodesicTotalAreaInfo, value, () => GeodesicTotalAreaInfo);
+            }
+        }
         private string _ShapePreserveAreaInfo = "";
         public string ShapePreserveAreaInfo
         {
@@ -309,7 +424,7 @@ namespace firstAddOn_ArcgisPro.UI
 
         public ICommand CmdUnitChanged { get; set; }
         private MapViewUtility MapViewUtil { get; set; }
-
+        private ICommand _esriLayoutSelect;
         private ICommand _cmdGetAreaFromFeature;
 
         public ICommand CmdGetAreaFromFeature
@@ -342,16 +457,20 @@ namespace firstAddOn_ArcgisPro.UI
 
         private async void btnDrawAndGetArea()
         {
-
-            await FrameworkApplication.SetCurrentToolAsync("ProWoodsideTools_EllipsoidalAreaMapTool");//mappped with id from config.daml
-            ((EllipsoidalAreaMapTool)FrameworkApplication.ActiveTool).OnDrawComplete += DockpaneEllipsoidalAreaViewModel_OnDrawComplete;
+            await FrameworkApplication.SetCurrentToolAsync("EllipsoidalArea_ProMapTools");//mappped with id from config.daml
+            ((ProMapTools)FrameworkApplication.ActiveTool).OnDrawComplete += DockpaneEllipsoidalAreaViewModel_OnDrawComplete;
         }
         private async void DockpaneEllipsoidalAreaViewModel_OnDrawComplete(Geometry geometry)
         {
-            await this.RemoveAllGraphics();
+            //await this.RemoveAllGraphics();
+            this.CheckAndCreateGraphicLayer();
             await this.AddGraphics(geometry);
             this.CalculateAndSetAreaInfo(geometry);
+            this.CalculateTotalAreaInfo();
             await FrameworkApplication.SetCurrentToolAsync(DAML.Tool.esri_mapping_exploreTool);
+            
+            await FrameworkApplication.SetCurrentToolAsync(DAML.Tool.esri_layouts_selectByRectangleTool);
+            
         }
 
         public void HandleUnitChanged()
@@ -392,10 +511,18 @@ namespace firstAddOn_ArcgisPro.UI
                 polygonGraphic.Polygon = (Polygon)geometry;
                 polygonGraphic.Symbol = polygonSymbol.MakeSymbolReference();
 
-                IDisposable tmpGraphic = MapView.Active.AddOverlay(polygonGraphic);
-                this.CurrentGraphicList.Add(tmpGraphic);
+                this._PolygonGraphicsLayer.AddElement(polygonGraphic);
+                polygonGraphic.PropertyChanged += PolygonGraphic_PropertyChanged;
+                //IDisposable tmpGraphic = MapView.Active.AddOverlay(polygonGraphic);
+                //this.CurrentGraphicList.Add(tmpGraphic);
             });
         }
+
+        private void PolygonGraphic_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.CalculateTotalAreaInfo();
+        }
+
         /// <summary>
         /// Get area from feature
         /// </summary>
@@ -418,7 +545,28 @@ namespace firstAddOn_ArcgisPro.UI
             }
             this._resultTable.TableName = "ResultTable" + DateTime.Now.ToString("yyyyMMddHHmmss");
         }
-
+        private async void CalculateTotalAreaInfo()
+        {
+            this.GeodesicTotalAreaInfo = "";
+            if (this._PolygonGraphicsLayer != null)
+            {
+                double totalArea = 0.0;
+                IReadOnlyList<GraphicElement> graphicElementList = this._PolygonGraphicsLayer.GetElementsAsFlattenedList();
+                await QueuedTask.Run(() =>
+                {
+                    foreach (var graphicEle in graphicElementList)
+                    {
+                        var tmpGraphic = graphicEle.GetGraphic();
+                        if (tmpGraphic is CIMPolygonGraphic polygonGraphic)
+                        {
+                            double tmpArea = this.GeometryUtil.CalculateGeoDesicArea(polygonGraphic.Polygon, this.SelectedLinearUnit);
+                            totalArea += tmpArea;
+                        }
+                    }
+                });
+                this.GeodesicTotalAreaInfo = "Total Area: " + StringFormatter.FormatDecimal(totalArea, 2) + " " + this.SelectedUnitFormat.Value.ToString();
+            }
+        }
         private void CalculateAndSetAreaInfo(Geometry CurrentGeometry)
         {
             //https://www.esri.com/arcgis-blog/products/js-api-arcgis/uncategorized/geometryengine-part-2-measurement/?rmedium=redirect&rsource=blogs.esri.com/esri/arcgis/2015/09/16/geometryengine-part-2-measurement

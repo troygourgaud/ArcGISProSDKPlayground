@@ -74,10 +74,10 @@ namespace firstAddOn_ArcgisPro
             if (args.Cancel)
                 return Task.CompletedTask;
 
-            var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.PerUserRoamingAndLocal);
-            Console.WriteLine(config == null);
-            var targetProjFolder = @"c:\temp";
-            var result = MessageBox.Show($@"Soll das aktuelle Projekt in ein anderes Verzeichnis als          {targetProjFolder} kopiert werden ?", "Projekt sichern", System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Question);
+            //var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.PerUserRoamingAndLocal);
+            //Console.WriteLine(config == null);
+            //var targetProjFolder = @"c:\temp";
+            //var result = MessageBox.Show($@"Soll das aktuelle Projekt in ein anderes Verzeichnis als          {targetProjFolder} kopiert werden ?", "Projekt sichern", System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Question);
             return Task.CompletedTask;
         }
         #endregion Overrides

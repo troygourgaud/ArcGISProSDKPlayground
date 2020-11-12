@@ -7,7 +7,7 @@
              xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" IsEnabled="{Binding Path=DockEnabled}"
+             d:DesignHeight="300" d:DesignWidth="340" IsEnabled="{Binding Path=DockEnabled}"
              d:DataContext="{Binding Path=ui.EllipsoidalAreaViewModel}">
      <UserControl.Resources>
         <ResourceDictionary>
@@ -61,13 +61,15 @@
             <Border Grid.Row="2" BorderBrush="{DynamicResource Esri_TextControlBrush}" BorderThickness="0 0 0 2" Margin="0,0,0,5">
                 <StackPanel Grid.Row="2" Orientation="Vertical" Grid.ColumnSpan="2">
                     <TextBlock x:Name="tbGeodesicArea" Text="{Binding Path=GeodesicAreaInfo}" ></TextBlock>
+                    <TextBlock x:Name="tbTotalArea" Text="{Binding Path=GeodesicTotalAreaInfo}" ></TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="btnDrawAndGetArea" Command="{Binding Path=CmdDrawAndGetArea}" Style="{DynamicResource Esri_Button}" >
                             Draw
                         </Button>
                         <Button x:Name="btnClearGraphics" Command="{Binding Path=CmdClearGraphics}" Style="{DynamicResource Esri_Button}" >
-                            Clear
+                            Clear All
                         </Button>
+                        <Button x:Name="btnRemove" Command="{Binding Path=CmdRemoveSelected}" Style="{DynamicResource Esri_Button}">Remove Selected</Button>
                     </StackPanel>
                 </StackPanel>
             </Border>

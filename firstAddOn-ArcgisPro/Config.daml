@@ -75,6 +75,11 @@
         <tool id="ProWoodsideTools_EllipsoidalAreaMapTool" className="ProWoodsideTools.EllipsoidalAreaMapTool" loadOnClick="false" caption="WEL Area" smallImage="Images\EllipsoidalArea16.png" largeImage="Images\EllipsoidalArea32.png" condition="esri_mapping_mapPane" keytip="Calculate Ellipsoidal Area of a Polygon">
           <tooltip heading="Calculate Ellipsoidal Area of a Polygon">
             Calculates the Ellipsoidal Area of a selected polygon
+            <disabledText /></tooltip>
+        </tool>
+        <tool id="EllipsoidalArea_ProMapTools" className="ProMapTools" loadOnClick="false" caption="WEL Area" smallImage="Images\EllipsoidalArea16.png" largeImage="Images\EllipsoidalArea32.png" condition="esri_mapping_mapPane" keytip="Calculate Ellipsoidal Area of a Polygon">
+          <tooltip heading="Calculate Ellipsoidal Area of a Polygon">
+            Calculates the Ellipsoidal Area of a selected polygon
             <disabledText />
           </tooltip>
         </tool>
